@@ -1,23 +1,37 @@
 const net = require('net');
+let clients = new Set(); // Set to store the sockets from the connected clients
 
 // Creates the TCP server
 const server = net.createServer((socket) => {
-    console.log("Client connected");
+    let message = `User ${socket.remoteAddress}:${socket.remotePort} connected to the server`; // Message when a new client connects
+    
+    clients.add(socket); // Adds client socket to the set
+    clients.forEach((client) => { // For each socket in the set:
+        try {
+            client.write(message);
+        } catch (err) {
+            console.error(`Error when sending to ${socket.remoteAddress}:${socket.remotePort}: ${err.message}`);
+            clients.delete(client);
+        }
+    })
+    console.log(message); // Prints message in the server side
     
     // When server receives data from client
     socket.on('data', (data) => {
-        console.log(`Received from client: ${data}`);
-        socket.write(`Echo: ${data}`);
+        console.log(`Received from client: ${data}`); 
+        socket.write(`Echo: ${data}`); // Echoes the data received
     });
 
-    // When the client(s) disconnects
+    // When a client disconnects
     socket.on('end', () => {
-        console.log("Client disconnected");
+        console.log("Client disconnected"); 
+        clients.delete(socket); // Removes the client socket from the set
     });
 
     // Error case
     socket.on('error', (err) => {
-        console.error("Socket error: ", err);
+        console.error("Socket error: ", err); 
+        clients.delete(socket); // Removes the client socket from the list
     });
 });
 const port = 8080; // Server listens on port 8080

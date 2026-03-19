@@ -13,7 +13,7 @@ client.connect(port, host,() => {
 // When the server responds
 client.on('data', (data) => {
     console.log(`Server response: ${data}`);
-    client.destroy();
+    //client.destroy();
 });
 
 // Error case
