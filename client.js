@@ -8,6 +8,7 @@ const host = 'localhost';
 const rl = readline.createInterface({ input, output });
 
 let isConnected = false;
+let username;
 
 async function askForInput () {
     if (!isConnected)
@@ -18,7 +19,11 @@ async function askForInput () {
             client.end();
             rl.close();
         } else {
-            client.write(input);
+            let message = {
+                user: username,
+                msg: input
+            }
+            client.write(JSON.stringify(message));
             askForInput();
         }
     });
@@ -28,7 +33,15 @@ async function askForInput () {
 client.connect(port, host,() => {
     console.log(`Connected to server ${host}:${port}`);
     isConnected = true;
-    askForInput();
+    rl.question('Type your username (or "exit" to exit): ', (input) => {
+        if (input.toLowerCase() == 'exit') {
+            client.end();
+            rl.close();
+        } else {
+            username = input;
+            askForInput();
+        }
+    });
 });
 
 // When the server responds

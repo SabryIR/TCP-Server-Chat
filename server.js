@@ -56,6 +56,6 @@ server.on('error', (err) => {
 })
 
 process.on('SIGINT', () => {
-    console.log("Servidor encerrando...");
+    console.log("Server shutting down...");
     process.exit();
 });
