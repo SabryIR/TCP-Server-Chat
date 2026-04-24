@@ -1,7 +1,6 @@
 const net = require('net');
 const readline = require('node:readline');
 const { stdin: input, stdout: output } = require('node:process');
-const message = "Olá\n"; // Data to be send
 const client = new net.Socket(); // Creates the TCP client
 const port = 8080;
 const host = 'localhost';

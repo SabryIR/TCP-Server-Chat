@@ -17,11 +17,7 @@ const server = net.createServer((socket) => {
         });
     }
     
-    let message = `User ${socket.remoteAddress}:${socket.remotePort} connected to the server`; // Message when a new client connects
-    
     clients.add(socket); // Adds client socket to the set
-    broadcast(message); // Sends message to all clients
-    console.log(message); // Prints message in the server side
     
     // When server receives data from client
     socket.on('data', (data) => {
