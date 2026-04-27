@@ -36,7 +36,7 @@ Siga os passos abaixo para rodar o chat localmente:
 ### 1. Clonar o Repositório
 
 ```
-git clone https://github.com/seu-usuario/TCP-Server-Chat.git
+git clone https://github.com/SabryIR/TCP-Server-Chat.git
 cd TCP-Server-Chat
 ```
 
